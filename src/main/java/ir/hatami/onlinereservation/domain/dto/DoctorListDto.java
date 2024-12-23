@@ -1,11 +1,12 @@
-package ir.hatami.onlinereservation.dto;
+package ir.hatami.onlinereservation.domain.dto;
 
-import ir.hatami.onlinereservation.type.Speciality;
+import ir.hatami.onlinereservation.domain.dto.common.BaseReadDto;
+import ir.hatami.onlinereservation.domain.type.Speciality;
 
 import java.util.UUID;
 
-public class DoctorListDto {
-    private UUID id;
+public class DoctorListDto extends BaseReadDto {
+
     private String name;
     private String surname;
     private Speciality speciality;
@@ -15,13 +16,6 @@ public class DoctorListDto {
     public DoctorListDto() {
     }
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

@@ -1,6 +1,6 @@
-package ir.hatami.onlinereservation.model;
+package ir.hatami.onlinereservation.domain.model;
 
-import ir.hatami.onlinereservation.model.common.BaseEntity;
+import ir.hatami.onlinereservation.domain.model.common.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;

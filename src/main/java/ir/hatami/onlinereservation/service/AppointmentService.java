@@ -1,8 +1,8 @@
 package ir.hatami.onlinereservation.service;
 
-import ir.hatami.onlinereservation.dto.AppointmentCreateDto;
-import ir.hatami.onlinereservation.dto.AppointmentReadDto;
-import ir.hatami.onlinereservation.dto.AppointmentUpdateDto;
+import ir.hatami.onlinereservation.domain.dto.AppointmentCreateDto;
+import ir.hatami.onlinereservation.domain.dto.AppointmentReadDto;
+import ir.hatami.onlinereservation.domain.dto.AppointmentUpdateDto;
 
 import java.util.List;
 import java.util.UUID;

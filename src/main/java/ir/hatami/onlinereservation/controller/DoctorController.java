@@ -1,9 +1,9 @@
 package ir.hatami.onlinereservation.controller;
 
-import ir.hatami.onlinereservation.dto.DoctorCreateDto;
-import ir.hatami.onlinereservation.dto.DoctorDetailsDto;
-import ir.hatami.onlinereservation.dto.DoctorListDto;
-import ir.hatami.onlinereservation.dto.DoctorUpdateDto;
+import ir.hatami.onlinereservation.domain.dto.DoctorCreateDto;
+import ir.hatami.onlinereservation.domain.dto.DoctorDetailsDto;
+import ir.hatami.onlinereservation.domain.dto.DoctorListDto;
+import ir.hatami.onlinereservation.domain.dto.DoctorUpdateDto;
 import ir.hatami.onlinereservation.service.DoctorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

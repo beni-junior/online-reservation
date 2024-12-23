@@ -1,7 +1,7 @@
 package ir.hatami.onlinereservation.service.impl;
 
-import ir.hatami.onlinereservation.dto.*;
-import ir.hatami.onlinereservation.model.Patient;
+import ir.hatami.onlinereservation.domain.dto.*;
+import ir.hatami.onlinereservation.domain.model.Patient;
 import ir.hatami.onlinereservation.repository.AppointmentRepository;
 import ir.hatami.onlinereservation.repository.PatientRepository;
 import ir.hatami.onlinereservation.service.PatientService;
@@ -50,7 +50,7 @@ public class PatientServiceImpl implements PatientService {
                     AppointmentReadDto readDto = new AppointmentReadDto();
                     readDto.setPatientFullName(patient.getFirstName() + " " + patient.getLastName());
                     readDto.setDoctorFullName(appointment.getDoctor().getName() + " " + appointment.getDoctor().getSurname());
-                    readDto.setMeetingTime(appointment.getMeetingTime());
+//                    readDto.setMeetingTime(appointment.getMeetingTime());
                     readDto.setId(appointment.getId());
 
                     return readDto;

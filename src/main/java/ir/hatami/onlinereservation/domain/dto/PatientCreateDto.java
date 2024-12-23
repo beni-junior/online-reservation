@@ -1,4 +1,8 @@
-package ir.hatami.onlinereservation.dto;
+package ir.hatami.onlinereservation.domain.dto;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +10,14 @@ import java.util.UUID;
 
 public class PatientCreateDto {
 
+    @NotNull
+    @Size(max = 64)
     private String firstName;
+    @NotNull
+    @Size(max = 64)
     private String lastName;
+
+    @Email
     private String email;
 //    private List<UUID> appointmentIds = new ArrayList<>();
 
@@ -38,11 +48,4 @@ public class PatientCreateDto {
         this.email = email;
     }
 
-//    public List<UUID> getAppointmentIds() {
-//        return appointmentIds;
-//    }
-//
-//    public void setAppointmentIds(List<UUID> appointmentIds) {
-//        this.appointmentIds = appointmentIds;
-//    }
 }

@@ -1,23 +1,14 @@
-package ir.hatami.onlinereservation.dto;
+package ir.hatami.onlinereservation.domain.dto;
 
-import java.util.UUID;
+import ir.hatami.onlinereservation.domain.dto.common.BaseReadDto;
 
-public class AppointmentReadDto {
+public class AppointmentReadDto extends BaseReadDto {
 
-    private UUID id;
     private String doctorFullName;
     private String patientFullName;
     private long meetingTime;
 
     public AppointmentReadDto() {
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public String getDoctorFullName() {

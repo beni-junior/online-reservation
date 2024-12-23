@@ -1,6 +1,6 @@
 package ir.hatami.onlinereservation.repository;
 
-import ir.hatami.onlinereservation.model.Patient;
+import ir.hatami.onlinereservation.domain.model.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

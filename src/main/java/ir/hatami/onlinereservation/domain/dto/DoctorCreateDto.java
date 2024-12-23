@@ -1,17 +1,24 @@
-package ir.hatami.onlinereservation.dto;
+package ir.hatami.onlinereservation.domain.dto;
 
-import ir.hatami.onlinereservation.type.Speciality;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import ir.hatami.onlinereservation.domain.type.Speciality;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class DoctorCreateDto {
 
+    @NotNull
+    @Size(max = 64)
     private String name;
+    @NotNull
+    @Size(max = 64)
     private String surname;
+    @NotNull
     private Speciality speciality;
+    @NotNull
+    @Size(max = 15)
     private String phone;
+    @NotNull
+    @Size(max = 255)
     private String address;
 //    private List<UUID> appointmentIds = new ArrayList<>();
 

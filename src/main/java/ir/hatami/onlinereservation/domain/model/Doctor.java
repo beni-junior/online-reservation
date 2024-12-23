@@ -1,8 +1,8 @@
-package ir.hatami.onlinereservation.model;
+package ir.hatami.onlinereservation.domain.model;
 
-import ir.hatami.onlinereservation.model.common.BaseEntity;
-import ir.hatami.onlinereservation.type.Speciality;
-import ir.hatami.onlinereservation.type.converter.SpecialityConverter;
+import ir.hatami.onlinereservation.domain.model.common.BaseEntity;
+import ir.hatami.onlinereservation.domain.type.Speciality;
+import ir.hatami.onlinereservation.domain.type.converter.SpecialityConverter;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public class Doctor extends BaseEntity {
 
     private String name;
     private String surname;
-    // convert enum to number for saving in db
+    // convert enum to number for saving in db (its auto applied no need to declare)
     @Convert(converter = SpecialityConverter.class)
     private Speciality speciality;
 

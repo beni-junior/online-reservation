@@ -1,4 +1,4 @@
-package ir.hatami.onlinereservation.type;
+package ir.hatami.onlinereservation.domain.type;
 
 public enum Speciality {
     VAL1(1),
