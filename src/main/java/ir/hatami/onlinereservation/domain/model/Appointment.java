@@ -9,8 +9,8 @@ import jakarta.persistence.*;
 @Table(name = "tb_appointment")
 public class Appointment extends BaseEntity {
 
-    @Convert(converter = TimePeriodConverter.class)
-    private TimePeriod timePeriod;
+//    @Convert(converter = TimePeriodConverter.class)
+//    private TimePeriod timePeriod;
     private long date;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -26,13 +26,6 @@ public class Appointment extends BaseEntity {
     public Appointment() {
     }
 
-    public TimePeriod getTimePeriod() {
-        return timePeriod;
-    }
-
-    public void setTimePeriod(TimePeriod timePeriod) {
-        this.timePeriod = timePeriod;
-    }
 
 
     public long getDate() {

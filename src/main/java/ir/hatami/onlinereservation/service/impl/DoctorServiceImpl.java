@@ -1,6 +1,8 @@
 package ir.hatami.onlinereservation.service.impl;
 
 import ir.hatami.onlinereservation.domain.dto.*;
+import ir.hatami.onlinereservation.domain.dto.common.DetailsDto;
+import ir.hatami.onlinereservation.domain.dto.common.ListDto;
 import ir.hatami.onlinereservation.domain.model.Doctor;
 import ir.hatami.onlinereservation.repository.AppointmentRepository;
 import ir.hatami.onlinereservation.repository.DoctorRepository;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -23,8 +26,8 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public List<DoctorListDto> load() {
-        return this.doctorRepository.findAll()
+    public Optional<List<? extends ListDto>> load() {
+        return Optional.of(this.doctorRepository.findAll()
                 .stream()
                 .map(doctor -> {
                     DoctorListDto dto = new DoctorListDto();
@@ -36,11 +39,11 @@ public class DoctorServiceImpl implements DoctorService {
                     dto.setSpeciality(doctor.getSpeciality());
 
                     return dto;
-                }).toList();
+                }).toList());
     }
 
     @Override
-    public DoctorDetailsDto load(UUID id) {
+    public Optional<DetailsDto> load(UUID id) {
         Doctor doctor = this.doctorRepository.findById(id).orElseThrow(() -> new RuntimeException("invalid.doctor.id"));
 
         DoctorDetailsDto dto = new DoctorDetailsDto();
@@ -62,7 +65,7 @@ public class DoctorServiceImpl implements DoctorService {
                     return readDtp;
                 }).toList()
         );
-        return dto;
+        return Optional.of(dto);
     }
 
     @Override

@@ -3,11 +3,14 @@ package ir.hatami.onlinereservation.controller;
 import ir.hatami.onlinereservation.domain.dto.AppointmentCreateDto;
 import ir.hatami.onlinereservation.domain.dto.AppointmentReadDto;
 import ir.hatami.onlinereservation.domain.dto.AppointmentUpdateDto;
+import ir.hatami.onlinereservation.domain.dto.common.DetailsDto;
+import ir.hatami.onlinereservation.domain.dto.common.ListDto;
 import ir.hatami.onlinereservation.service.AppointmentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -21,12 +24,12 @@ public class AppointmentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AppointmentReadDto>> getAllDoctors() {
+    public ResponseEntity<Optional<List<? extends ListDto>>> getAllDoctors() {
         return ResponseEntity.ok(this.service.load());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<AppointmentReadDto> getDoctorById(@PathVariable("id") UUID id) {
+    public ResponseEntity<Optional<DetailsDto>> getDoctorById(@PathVariable("id") UUID id) {
         return ResponseEntity.ok(this.service.load(id));
     }
 

@@ -1,9 +1,11 @@
 package ir.hatami.onlinereservation.domain.dto;
 
+import ir.hatami.onlinereservation.domain.dto.common.DetailsDto;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class DoctorDetailsDto extends DoctorListDto{
+public class DoctorDetailsDto extends DoctorListDto implements DetailsDto {
 
     private List<AppointmentReadDto> appointments = new ArrayList<>();
 

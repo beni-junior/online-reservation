@@ -1,10 +1,11 @@
 package ir.hatami.onlinereservation.domain.dto;
 
+import ir.hatami.onlinereservation.domain.dto.common.CreateDto;
 import ir.hatami.onlinereservation.domain.type.Speciality;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public class DoctorCreateDto {
+public class DoctorCreateDto implements CreateDto {
 
     @NotNull
     @Size(max = 64)

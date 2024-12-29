@@ -1,6 +1,8 @@
 package ir.hatami.onlinereservation.service.impl;
 
 import ir.hatami.onlinereservation.domain.dto.*;
+import ir.hatami.onlinereservation.domain.dto.common.DetailsDto;
+import ir.hatami.onlinereservation.domain.dto.common.ListDto;
 import ir.hatami.onlinereservation.domain.model.Patient;
 import ir.hatami.onlinereservation.repository.AppointmentRepository;
 import ir.hatami.onlinereservation.repository.PatientRepository;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -23,8 +26,8 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public List<PatientListDto> load() {
-        return this.patientRepository.findAll()
+    public Optional<List<? extends ListDto>> load() {
+        return Optional.of(this.patientRepository.findAll()
                 .stream()
                 .map(patient -> {
                     PatientListDto dto = new PatientListDto();
@@ -33,11 +36,11 @@ public class PatientServiceImpl implements PatientService {
                     dto.setFirstName(patient.getFirstName());
                     dto.setLastName(patient.getLastName());
                     return dto;
-                }).toList();
+                }).toList());
     }
 
     @Override
-    public PatientDetailsDto load(UUID id) {
+    public Optional<DetailsDto> load(UUID id) {
         Patient patient = this.patientRepository.findById(id).orElseThrow(() -> new RuntimeException("Patient not found"));
         PatientDetailsDto dto = new PatientDetailsDto();
 
@@ -57,7 +60,7 @@ public class PatientServiceImpl implements PatientService {
                 }).toList()
         );
 
-        return dto;
+        return Optional.of(dto);
     }
 
     @Override

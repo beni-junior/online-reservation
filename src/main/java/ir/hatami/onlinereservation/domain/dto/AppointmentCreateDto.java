@@ -1,12 +1,13 @@
 package ir.hatami.onlinereservation.domain.dto;
 
+import ir.hatami.onlinereservation.domain.dto.common.CreateDto;
 import ir.hatami.onlinereservation.domain.type.TimePeriod;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
-public class AppointmentCreateDto {
+public class AppointmentCreateDto implements CreateDto {
     @Min(1)
     private long date;
     @NotNull

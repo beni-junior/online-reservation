@@ -1,8 +1,9 @@
 package ir.hatami.onlinereservation.domain.dto;
 
 import ir.hatami.onlinereservation.domain.dto.common.BaseReadDto;
+import ir.hatami.onlinereservation.domain.dto.common.ListDto;
 
-public class PatientListDto extends BaseReadDto {
+public class PatientListDto extends BaseReadDto implements ListDto {
       private String firstName;
     private String lastName;
     private String email;

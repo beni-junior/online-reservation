@@ -1,16 +1,31 @@
 package ir.hatami.onlinereservation.domain.dto;
 
-import ir.hatami.onlinereservation.domain.dto.common.BaseReadDto;
-import ir.hatami.onlinereservation.domain.dto.common.DetailsDto;
 import ir.hatami.onlinereservation.domain.dto.common.ListDto;
 
-public class AppointmentReadDto extends BaseReadDto implements ListDto, DetailsDto {
+public class ArchivedAppointmentListDto implements ListDto {
 
+    private long id;
+    private long appointmentDate;
     private String doctorFullName;
     private String patientFullName;
-    private long meetingTime;
 
-    public AppointmentReadDto() {
+    public ArchivedAppointmentListDto() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getAppointmentDate() {
+        return appointmentDate;
+    }
+
+    public void setAppointmentDate(long appointmentDate) {
+        this.appointmentDate = appointmentDate;
     }
 
     public String getDoctorFullName() {
@@ -27,13 +42,5 @@ public class AppointmentReadDto extends BaseReadDto implements ListDto, DetailsD
 
     public void setPatientFullName(String patientFullName) {
         this.patientFullName = patientFullName;
-    }
-
-    public long getMeetingTime() {
-        return meetingTime;
-    }
-
-    public void setMeetingTime(long meetingTime) {
-        this.meetingTime = meetingTime;
     }
 }

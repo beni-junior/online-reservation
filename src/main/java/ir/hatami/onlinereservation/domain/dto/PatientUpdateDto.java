@@ -1,4 +1,6 @@
 package ir.hatami.onlinereservation.domain.dto;
 
-public class PatientUpdateDto extends PatientCreateDto {
+import ir.hatami.onlinereservation.domain.dto.common.UpdateDto;
+
+public class PatientUpdateDto extends PatientCreateDto implements UpdateDto {
 }

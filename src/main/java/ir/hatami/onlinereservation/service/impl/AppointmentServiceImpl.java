@@ -3,10 +3,11 @@ package ir.hatami.onlinereservation.service.impl;
 import ir.hatami.onlinereservation.domain.dto.AppointmentCreateDto;
 import ir.hatami.onlinereservation.domain.dto.AppointmentReadDto;
 import ir.hatami.onlinereservation.domain.dto.AppointmentUpdateDto;
+import ir.hatami.onlinereservation.domain.dto.common.DetailsDto;
+import ir.hatami.onlinereservation.domain.dto.common.ListDto;
 import ir.hatami.onlinereservation.domain.model.Appointment;
 import ir.hatami.onlinereservation.domain.model.Doctor;
 import ir.hatami.onlinereservation.domain.model.Patient;
-import ir.hatami.onlinereservation.domain.type.TimePeriod;
 import ir.hatami.onlinereservation.repository.AppointmentRepository;
 import ir.hatami.onlinereservation.repository.DoctorRepository;
 import ir.hatami.onlinereservation.repository.PatientRepository;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -31,8 +33,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public List<AppointmentReadDto> load() {
-        return this.appointmentRepository.findAll().stream().map(app -> {
+    public Optional<List<? extends ListDto>> load() {
+        return Optional.of(this.appointmentRepository.findAll().stream().map(app -> {
             AppointmentReadDto appointmentReadDto = new AppointmentReadDto();
             appointmentReadDto.setId(app.getId());
             appointmentReadDto.setMeetingTime(app.getDate());
@@ -40,11 +42,11 @@ public class AppointmentServiceImpl implements AppointmentService {
             appointmentReadDto.setPatientFullName(app.getPatient().getFirstName() + " " + app.getPatient().getLastName());
 
             return appointmentReadDto;
-        }).toList();
+        }).toList());
     }
 
     @Override
-    public AppointmentReadDto load(UUID id) {
+    public Optional<DetailsDto> load(UUID id) {
         Appointment appointment = this.appointmentRepository.findById(id).orElseThrow(() -> new RuntimeException("invalid.appointment.id"));
 
         AppointmentReadDto appointmentReadDto = new AppointmentReadDto();
@@ -53,7 +55,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointmentReadDto.setPatientFullName(appointment.getPatient().getFirstName() + " " + appointment.getPatient().getLastName());
         appointmentReadDto.setId(appointment.getId());
 
-        return appointmentReadDto;
+        return Optional.of(appointmentReadDto);
     }
 
     @Override
@@ -68,7 +70,6 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointment.setDoctor(doctor);
         appointment.setPatient(patient);
         appointment.setDate(createDto.getDate());
-        appointment.setTimePeriod(createDto.getTimePeriod());
         this.appointmentRepository.save(appointment);
     }
 
