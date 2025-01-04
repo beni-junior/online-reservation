@@ -3,19 +3,29 @@ package ir.hatami.onlinereservation.service.impl;
 import ir.hatami.onlinereservation.domain.dto.ArchivedAppointmentDetailsDto;
 import ir.hatami.onlinereservation.domain.dto.ArchivedAppointmentListDto;
 import ir.hatami.onlinereservation.domain.dto.common.DetailsDto;
+import ir.hatami.onlinereservation.domain.model.Appointment;
 import ir.hatami.onlinereservation.domain.model.ArchivedAppointment;
+import ir.hatami.onlinereservation.domain.model.Doctor;
+import ir.hatami.onlinereservation.domain.model.Patient;
 import ir.hatami.onlinereservation.repository.ArchivedAppointmentRepository;
+import ir.hatami.onlinereservation.service.AppointmentService;
 import ir.hatami.onlinereservation.service.ArchivedAppointmentService;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
+@Service
 public class ArchivedAppointmentServiceImpl implements ArchivedAppointmentService, InitializingBean {
-    private final ArchivedAppointmentRepository archivedAppointmentRepository;
 
-    public ArchivedAppointmentServiceImpl(ArchivedAppointmentRepository archivedAppointmentRepository) {
+    private final ArchivedAppointmentRepository archivedAppointmentRepository;
+    private final AppointmentService appointmentService;
+
+    public ArchivedAppointmentServiceImpl(ArchivedAppointmentRepository archivedAppointmentRepository, AppointmentService appointmentService) {
         this.archivedAppointmentRepository = archivedAppointmentRepository;
+        this.appointmentService = appointmentService;
     }
 
     @Override
@@ -52,23 +62,52 @@ public class ArchivedAppointmentServiceImpl implements ArchivedAppointmentServic
         return Optional.of(detailsDto);
     }
 
-    @Override
-    public void create(ArchivedAppointment archivedAppointment) {
-        archivedAppointmentRepository.save(archivedAppointment);
-    }
 
     @Override
     public void afterPropertiesSet() throws Exception {
         new Thread(new AppointmentArchiverTask(), "archiver-thread").start();
     }
 
-    private static class AppointmentArchiverTask implements Runnable {
+    private class AppointmentArchiverTask implements Runnable {
 
         @Override
         public void run() {
             while (true) {
+                int counter = 0;
+                for (Appointment appointment : appointmentService.findAndSetAllExpired()) {
+                    ArchivedAppointment archivedAppointment = new ArchivedAppointment();
+
+                    archivedAppointment.setAppointmentDate(appointment.getDate());
+
+                    Doctor doctor = appointment.getDoctor();
+                    archivedAppointment.setDoctorFullName(doctor.getName() + " " + doctor.getSurname());
+                    archivedAppointment.setDoctorAddress(doctor.getAddress());
+                    archivedAppointment.setDoctorPhone(doctor.getPhone());
+                    archivedAppointment.setDoctorSpeciality(doctor.getSpeciality());
+
+                    Patient patient = appointment.getPatient();
+                    archivedAppointment.setPatientFullName(patient.getFirstName() + " " + patient.getLastName());
+                    archivedAppointment.setPatientEmail(patient.getEmail());
+
+                    this.create(archivedAppointment);
+                    counter++;
+                }
+                System.out.printf(">>>> %d appointment got expired.\n", counter);
+                this.delay();
             }
-            // TODO process and find expired and call create archive
+
+        }
+
+        private void create(ArchivedAppointment archivedAppointment) {
+            archivedAppointmentRepository.save(archivedAppointment);
+        }
+
+        private void delay() {
+            try {
+                TimeUnit.MINUTES.sleep(15);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

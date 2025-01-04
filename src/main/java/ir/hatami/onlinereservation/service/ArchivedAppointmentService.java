@@ -12,5 +12,4 @@ public interface ArchivedAppointmentService {
 
     Optional<DetailsDto> load(Long id);
 
-    void create(ArchivedAppointment archivedAppointment);
 }

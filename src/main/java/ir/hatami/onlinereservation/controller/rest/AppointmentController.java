@@ -1,12 +1,10 @@
-package ir.hatami.onlinereservation.controller;
+package ir.hatami.onlinereservation.controller.rest;
 
-import ir.hatami.onlinereservation.domain.dto.PatientCreateDto;
-import ir.hatami.onlinereservation.domain.dto.PatientDetailsDto;
-import ir.hatami.onlinereservation.domain.dto.PatientListDto;
-import ir.hatami.onlinereservation.domain.dto.PatientUpdateDto;
+import ir.hatami.onlinereservation.domain.dto.AppointmentCreateDto;
+import ir.hatami.onlinereservation.domain.dto.AppointmentUpdateDto;
 import ir.hatami.onlinereservation.domain.dto.common.DetailsDto;
 import ir.hatami.onlinereservation.domain.dto.common.ListDto;
-import ir.hatami.onlinereservation.service.PatientService;
+import ir.hatami.onlinereservation.service.AppointmentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +13,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/patients")
-public class PatientController {
-    private final PatientService service;
+@RequestMapping("api/appointments")
+public class AppointmentController {
 
-    public PatientController(PatientService service) {
+    private final AppointmentService service;
+
+    public AppointmentController(AppointmentService service) {
         this.service = service;
     }
 
@@ -34,13 +33,13 @@ public class PatientController {
     }
 
     @PostMapping
-    public ResponseEntity<String> create(@RequestBody PatientCreateDto createDto) {
+    public ResponseEntity<String> create(@RequestBody AppointmentCreateDto createDto) {
         this.service.create(createDto);
         return ResponseEntity.ok("suc.creation");
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<String> update(@PathVariable("id") UUID id, @RequestBody PatientUpdateDto updateDto) {
+    public ResponseEntity<String> update(@PathVariable("id") UUID id, @RequestBody AppointmentUpdateDto updateDto) {
         this.service.update(id, updateDto);
         return ResponseEntity.ok("suc.update");
     }

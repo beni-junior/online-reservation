@@ -15,6 +15,7 @@ import ir.hatami.onlinereservation.service.AppointmentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -47,7 +48,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public Optional<DetailsDto> load(UUID id) {
-        Appointment appointment = this.appointmentRepository.findById(id).orElseThrow(() -> new RuntimeException("invalid.appointment.id"));
+        Appointment appointment = this.getById(id);
 
         AppointmentReadDto appointmentReadDto = new AppointmentReadDto();
         appointmentReadDto.setMeetingTime(appointment.getDate());
@@ -76,8 +77,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     @Transactional
     public void update(UUID id, AppointmentUpdateDto updateDto) {
-        Appointment appointment = this.appointmentRepository.findById(id).orElseThrow(() -> new RuntimeException("invalid.appointment.id"));
-
+        Appointment appointment = this.getById(id);
+        this.processExtraBeforeModification(appointment);
         Doctor doctor = this.doctorRepository.findById(updateDto.getDoctorId()).orElseThrow(() -> new RuntimeException("invalid.doctor.id"));
         Patient patient = this.patientRepository.findById(updateDto.getPatientId()).orElseThrow(() -> new RuntimeException("invalid.patient.id"));
 
@@ -88,9 +89,35 @@ public class AppointmentServiceImpl implements AppointmentService {
         this.appointmentRepository.save(appointment);
     }
 
+
     @Override
     @Transactional
     public void delete(UUID id) {
-        this.appointmentRepository.deleteById(id);
+        Appointment appointment = this.getById(id);
+        this.processExtraBeforeModification(appointment);
+
+        this.appointmentRepository.delete(appointment);
+    }
+
+    @Override
+    public List<Appointment> findAndSetAllExpired() {
+        List<Appointment> allExpired = this.appointmentRepository.findAllGettingExpired(Instant.now().getEpochSecond());
+        for (Appointment appointment : allExpired) {
+            appointment.setExpired(true);
+        }
+        this.appointmentRepository.saveAll(allExpired);
+        return allExpired;
+
+    }
+
+
+    private void processExtraBeforeModification(Appointment appointment) {
+        if (appointment.isExpired())
+            throw new RuntimeException("Appointment is expired");
+    }
+
+
+    private Appointment getById(UUID id) {
+        return this.appointmentRepository.findById(id).orElseThrow(() -> new RuntimeException("invalid.appointment.id"));
     }
 }

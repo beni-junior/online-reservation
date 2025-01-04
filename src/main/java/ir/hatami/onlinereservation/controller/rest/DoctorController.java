@@ -1,8 +1,6 @@
-package ir.hatami.onlinereservation.controller;
+package ir.hatami.onlinereservation.controller.rest;
 
 import ir.hatami.onlinereservation.domain.dto.DoctorCreateDto;
-import ir.hatami.onlinereservation.domain.dto.DoctorDetailsDto;
-import ir.hatami.onlinereservation.domain.dto.DoctorListDto;
 import ir.hatami.onlinereservation.domain.dto.DoctorUpdateDto;
 import ir.hatami.onlinereservation.domain.dto.common.DetailsDto;
 import ir.hatami.onlinereservation.domain.dto.common.ListDto;
