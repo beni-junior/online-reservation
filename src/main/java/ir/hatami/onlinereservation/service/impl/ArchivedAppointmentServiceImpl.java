@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+/**
+    @implNote  interface of "InitializingBean" is Spring boot interface with method initialize that this method will be invoked automatically after all requirements of this service is gathered.
+ */
 @Service
 public class ArchivedAppointmentServiceImpl implements ArchivedAppointmentService, InitializingBean {
 
@@ -65,6 +68,7 @@ public class ArchivedAppointmentServiceImpl implements ArchivedAppointmentServic
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        // create and start a worker method that will be alive infinite.
         new Thread(new AppointmentArchiverTask(), "archiver-thread").start();
     }
 
